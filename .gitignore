@@ -12,3 +12,5 @@ Gemfile.lock
 bin/*
 .bundle/*
 
+cookbooks
+!cookbooks/riak-ruby-vagrant
