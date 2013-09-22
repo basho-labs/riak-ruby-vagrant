@@ -1,7 +1,12 @@
 {
   "sources": {
     "riak": {
-      "locked_version": "2.3.3"
+      "locked_version": "2.3.3",
+      "git": "git://github.com/bkerley/riak-chef-cookbook.git",
+      "ref": "f9a3a8bfd9bccb4d7a8e111e00d6f73591c8b415"
+    },
+    "riak-ruby-vagrant": {
+      "path": "./cookbooks/riak-ruby-vagrant"
     },
     "apt": {
       "locked_version": "2.1.1"
