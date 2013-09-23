@@ -51,14 +51,14 @@ download_unless_exist() {
 }
 
 sudo apt-get update
-sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev
+sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl
 
-# if [ ! -e oab-java.sh ]; then
-#   wget "https://github.com/flexiondotorg/oab-java6/raw/0.3.0/oab-java.sh"
-#   chmod +x oab-java.sh
-#   sudo ./oab-java.sh -7 -s
-#   sudo apt-get install oracle-java7-jre
-# fi
+if [ ! -e oab-java.sh ]; then
+  wget "https://github.com/flexiondotorg/oab-java6/raw/0.3.0/oab-java.sh"
+  chmod +x oab-java.sh
+  sudo ./oab-java.sh -7 -s
+  sudo apt-get install -y oracle-java7-jre
+fi
 
 download_unless_exist "http://www.erlang.org/download/otp_src_R16B02.tar.gz"
 
@@ -73,13 +73,20 @@ if [ ! -d otp_src_R16B02 ]; then
   popd
 fi
 
-download_unless_exist "http://riak-ruby-vagrant.data.riakcs.net:8080/riak-2.0.0pre1.tar.gz"
-
-verify_checksum "riak-2.0.0pre1.tar.gz" 74581e350b9631edc68bdf8799b7ea16 || exit
-
-if [ ! -d riak-2.0.0pre1 ]; then
-  tar zxf "riak-2.0.0pre1.tar.gz"
-  pushd "riak-2.0.0pre1"
-  make
-  make rel
+if [ ! -d riak ]; then
+  git clone https://github.com/basho/riak.git -b release/2.0.0pre2
+  pushd riak
+  git checkout riak-2.0.0pre2
+  make locked-all rel
+  pushd rel/riak
+  sed -e 's/yokozuna = off/yokozuna = on/;' -i.back etc/riak.conf
+  sed -e 's/storage_backend = bitcask/storage_backend = memory/;' -i.back etc/riak.conf
+  popd
+  popd
 fi
+
+pushd riak/rel/riak
+ulimit -n 8192
+ulimit -n
+./bin/riak start
+./bin/riak ping
