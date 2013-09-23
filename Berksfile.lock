@@ -3,7 +3,7 @@
     "riak": {
       "locked_version": "2.3.3",
       "git": "git://github.com/bkerley/riak-chef-cookbook.git",
-      "ref": "f9a3a8bfd9bccb4d7a8e111e00d6f73591c8b415"
+      "ref": "217b6fbd82a89b997e0ae5236f3579fb1f3af672"
     },
     "riak-ruby-vagrant": {
       "path": "./cookbooks/riak-ruby-vagrant"
