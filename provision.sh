@@ -57,7 +57,7 @@ if [ ! -e oab-java.sh ]; then
   wget "https://github.com/flexiondotorg/oab-java6/raw/0.3.0/oab-java.sh"
   chmod +x oab-java.sh
   sudo ./oab-java.sh -7 -s
-  sudo apt-get install -y oracle-java7-jre
+  sudo apt-get install -y oracle-java7-jdk
 fi
 
 download_unless_exist "http://www.erlang.org/download/otp_src_R16B02.tar.gz"
@@ -81,6 +81,8 @@ if [ ! -d riak ]; then
   pushd rel/riak
   sed -e 's/yokozuna = off/yokozuna = on/;' -i.back etc/riak.conf
   sed -e 's/storage_backend = bitcask/storage_backend = memory/;' -i.back etc/riak.conf
+  sed -e 's/listener.http.internal = 127.0.0.1:8098/listener.http.internal = 0.0.0.0:8098/;' -i.back etc/riak.conf
+  sed -e 's/listener.protobuf.internal = 127.0.0.1:8087/listener.protobuf.internal = 0.0.0.0:8087/;' -i.back etc/riak.conf
   popd
   popd
 fi
