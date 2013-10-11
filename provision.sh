@@ -51,7 +51,7 @@ download_unless_exist() {
 }
 
 sudo apt-get update
-sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl
+sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl libpam0g-dev
 
 if [ ! -e oab-java.sh ]; then
   wget "https://github.com/flexiondotorg/oab-java6/raw/0.3.0/oab-java.sh"
@@ -74,15 +74,17 @@ if [ ! -d otp_src_R16B02 ]; then
 fi
 
 if [ ! -d riak ]; then
-  git clone https://github.com/basho/riak.git -b release/2.0.0pre2
+  git clone https://github.com/basho/riak.git -b release/2.0.0pre3
   pushd riak
-  git checkout riak-2.0.0pre2
+  git checkout riak-2.0.0pre3
   make locked-all rel
   pushd rel/riak
   sed -e 's/yokozuna = off/yokozuna = on/;' -i.back etc/riak.conf
+  sed -e 's/anti_entropy = on/anti_entropy = off/;' -i.back etc/riak.conf
   sed -e 's/storage_backend = bitcask/storage_backend = memory/;' -i.back etc/riak.conf
   sed -e 's/listener.http.internal = 127.0.0.1:8098/listener.http.internal = 0.0.0.0:8098/;' -i.back etc/riak.conf
   sed -e 's/listener.protobuf.internal = 127.0.0.1:8087/listener.protobuf.internal = 0.0.0.0:8087/;' -i.back etc/riak.conf
+  echo "[{riak_core, [{default_bucket_props, [{allow_mult, true}]}]}]." >> etc/advanced.config
   popd
   popd
 fi
