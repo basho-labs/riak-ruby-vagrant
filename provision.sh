@@ -74,9 +74,9 @@ if [ ! -d otp_src_R16B02 ]; then
 fi
 
 if [ ! -d riak ]; then
-  git clone https://github.com/basho/riak.git -b release/2.0.0pre3
+  git clone https://github.com/basho/riak.git -b release/2.0.0pre4
   pushd riak
-  git checkout riak-2.0.0pre3
+  git checkout riak-2.0.0pre4
   make locked-all rel
   pushd rel/riak
   sed -e 's/yokozuna = off/yokozuna = on/;' -i.back etc/riak.conf
@@ -94,7 +94,6 @@ if [ ! -d riak ]; then
   send "\007"
   send "q\n"
 END_EXPECT
-  ./bin/riak escript /tmp/crdt_types.escript
   popd
   popd
 fi
