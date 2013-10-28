@@ -1,8 +1,11 @@
 riak-ruby-vagrant
 =================
 
-Vagrant configuration for testing riak-ruby-client with Riak 2. This is better and easier than working
+Vagrant environment for testing riak-ruby-client with Riak 2. This is better and easier than working
 with the test-server support from older versions of riak-ruby-client.
+
+This almost certainly works for testing other Riak clients, apps using Riak, and just playing around 
+with. It's not designed for production use. **Do not use this in production.**
 
 Getting Started
 ===============
