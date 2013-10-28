@@ -13,7 +13,7 @@ Getting Started
 1. Clone this repo: `git clone https://github.com/basho-labs/riak-ruby-vagrant.git`
 2. Read and do this: http://docs.vagrantup.com/v2/getting-started/index.html
 3. Riak 2 should now be running in a virtual machine, listening for protobuffs on localhost:17017 ,
-   and HTTP on http://localhost:17018 .
+   and HTTP at http://localhost:17018/ .
 
 Configuration Notes
 ===================
