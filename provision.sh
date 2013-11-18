@@ -74,16 +74,16 @@ if [ ! -d otp_src_R16B02 ]; then
 fi
 
 if [ ! -d riak ]; then
-  git clone https://github.com/basho/riak.git -b release/2.0.0pre5
+  git clone https://github.com/basho/riak.git -b release/2.0.0pre6
   pushd riak
-  git checkout riak-2.0.0pre5
+  git checkout riak-2.0.0pre6
   make locked-all rel
   pushd rel/riak
-  sed -e 's/yokozuna = off/yokozuna = on/;' -i.back etc/riak.conf
-  sed -e 's/anti_entropy = on/anti_entropy = off/;' -i.back etc/riak.conf
-  sed -e 's/storage_backend = bitcask/storage_backend = memory/;' -i.back etc/riak.conf
-  sed -e 's/listener.http.internal = 127.0.0.1:8098/listener.http.internal = 0.0.0.0:8098/;' -i.back etc/riak.conf
-  sed -e 's/listener.protobuf.internal = 127.0.0.1:8087/listener.protobuf.internal = 0.0.0.0:8087/;' -i.back etc/riak.conf
+  echo 'yokozuna = on' >> etc/riak.conf
+  echo 'anti_entropy = off' >> etc/riak.conf
+  echo 'storage_backend = memory' >> etc/riak.conf
+  echo 'listener.http.internal = 0.0.0.0:8098' >> etc/riak.conf
+  echo 'listener.protobuf.internal = 0.0.0.0:8087' >> etc/riak.conf
   echo "[{riak_core, [{default_bucket_props, [{allow_mult, true}]}]}]." >> etc/advanced.config
   ulimit -n 8192
   expect - <<END_EXPECT
