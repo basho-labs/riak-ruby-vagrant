@@ -1,8 +1,11 @@
 riak-ruby-vagrant
 =================
 
-Vagrant configuration for testing riak-ruby-client with Riak 2. This is better and easier than working
+Vagrant environment for testing riak-ruby-client with Riak 2. This is better and easier than working
 with the test-server support from older versions of riak-ruby-client.
+
+This almost certainly works for testing other Riak clients, apps using Riak, and just playing around 
+with. It's not designed for production use. **Do not use this in production.**
 
 Getting Started
 ===============
@@ -10,7 +13,7 @@ Getting Started
 1. Clone this repo: `git clone https://github.com/basho-labs/riak-ruby-vagrant.git`
 2. Read and do this: http://docs.vagrantup.com/v2/getting-started/index.html
 3. Riak 2 should now be running in a virtual machine, listening for protobuffs on localhost:17017 ,
-   and HTTP on http://localhost:17018 .
+   and HTTP at http://localhost:17018/ .
 
 Configuration Notes
 ===================
