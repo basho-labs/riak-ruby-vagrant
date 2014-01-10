@@ -74,9 +74,9 @@ if [ ! -d otp_src_R16B02 ]; then
 fi
 
 if [ ! -d riak ]; then
-  git clone https://github.com/basho/riak.git -b release/2.0.0pre7
+  git clone https://github.com/basho/riak.git
   pushd riak
-  git checkout riak-2.0.0pre7
+  git checkout riak-2.0.0pre10
   make locked-all rel
   pushd rel/riak
   echo 'yokozuna = on' >> etc/riak.conf
