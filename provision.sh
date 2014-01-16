@@ -51,14 +51,7 @@ download_unless_exist() {
 }
 
 sudo apt-get update
-sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl libpam0g-dev expect
-
-if [ ! -e oab-java.sh ]; then
-  wget "https://github.com/flexiondotorg/oab-java6/raw/0.3.0/oab-java.sh"
-  chmod +x oab-java.sh
-  sudo ./oab-java.sh -7 -s
-  sudo apt-get install -y oracle-java7-jdk
-fi
+sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl libpam0g-dev expect openjdk-7-jdk
 
 download_unless_exist "http://www.erlang.org/download/otp_src_R16B02.tar.gz"
 
