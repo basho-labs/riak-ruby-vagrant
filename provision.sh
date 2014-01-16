@@ -72,8 +72,8 @@ if [ ! -d riak ]; then
   git checkout riak-2.0.0pre10
   make locked-all rel
   pushd rel/riak
-  echo 'yokozuna = on' >> etc/riak.conf
-  echo 'anti_entropy = off' >> etc/riak.conf
+  echo 'search = on' >> etc/riak.conf
+  echo 'anti_entropy = passive' >> etc/riak.conf
   echo 'storage_backend = memory' >> etc/riak.conf
   echo 'listener.http.internal = 0.0.0.0:8098' >> etc/riak.conf
   echo 'listener.protobuf.internal = 0.0.0.0:8087' >> etc/riak.conf
