@@ -69,7 +69,7 @@ fi
 if [ ! -d riak ]; then
   git clone https://github.com/basho/riak.git
   pushd riak
-  git checkout riak-2.0.0pre10
+  git checkout riak-2.0.0pre11
   make locked-all rel
   pushd rel/riak
   echo 'search = on' >> etc/riak.conf
@@ -77,7 +77,7 @@ if [ ! -d riak ]; then
   echo 'storage_backend = memory' >> etc/riak.conf
   echo 'listener.http.internal = 0.0.0.0:8098' >> etc/riak.conf
   echo 'listener.protobuf.internal = 0.0.0.0:8087' >> etc/riak.conf
-  echo "[{riak_core, [{default_bucket_props, [{allow_mult, true}]}]}]." >> etc/advanced.config
+  cp /vagrant/advanced.config etc/advanced.config
   ulimit -n 8192
   expect - <<END_EXPECT
   spawn ./bin/riak console
