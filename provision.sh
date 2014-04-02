@@ -69,7 +69,7 @@ fi
 if [ ! -d riak ]; then
   git clone https://github.com/basho/riak.git
   pushd riak
-  git checkout riak-2.0.0pre11
+  git checkout riak-2.0.0pre20
   make locked-all rel
   pushd rel/riak
   echo 'search = on' >> etc/riak.conf
