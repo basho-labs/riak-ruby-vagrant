@@ -51,7 +51,12 @@ download_unless_exist() {
 }
 
 sudo apt-get update
-sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl libpam0g-dev expect openjdk-7-jdk
+sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl libpam0g-dev expect python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+sudo apt-get install -y oracle-java7-installer
+
 
 download_unless_exist "http://www.erlang.org/download/otp_src_R16B02.tar.gz"
 
@@ -78,15 +83,6 @@ if [ ! -d riak ]; then
   echo 'listener.http.internal = 0.0.0.0:8098' >> etc/riak.conf
   echo 'listener.protobuf.internal = 0.0.0.0:8087' >> etc/riak.conf
   cp /vagrant/advanced.config etc/advanced.config
-  ulimit -n 8192
-  expect - <<END_EXPECT
-  spawn ./bin/riak console
-  expect "(riak@127.0.0.1)1>"
-  send "riak_core_bucket_type:create\(<<\"maps\">>, \[\{datatype, map\}, \{allow_mult, true\}\]\), riak_core_bucket_type:activate\(<<\"maps\">>\),riak_core_bucket_type:create\(<<\"sets\">>, \[\{datatype, set\}, \{allow_mult, true\}\]\), riak_core_bucket_type:activate\(<<\"sets\">>),riak_core_bucket_type:create\(<<\"counters\">>, \[\{datatype, counter\}, \{allow_mult, true\}\]\), riak_core_bucket_type:activate\(<<\"counters\">>\).\n"
-  expect "ok"
-  send "\007"
-  send "q\n"
-END_EXPECT
   popd
   popd
 fi
@@ -95,4 +91,14 @@ pushd riak/rel/riak
 ulimit -n 8192
 ulimit -n
 ./bin/riak start
+
+./bin/riak-admin bucket-type create counters '{"props":{"datatype":"counter", "allow_mult":true}}'
+./bin/riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
+./bin/riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
+./bin/riak-admin bucket-type create yokozuna '{"props":{}}'
+./bin/riak-admin bucket-type activate counters
+./bin/riak-admin bucket-type activate maps
+./bin/riak-admin bucket-type activate sets
+./bin/riak-admin bucket-type activate yokozuna
+
 ./bin/riak ping
