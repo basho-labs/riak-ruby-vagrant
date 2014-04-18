@@ -50,6 +50,7 @@ download_unless_exist() {
   `wget "$url"`
 }
 
+
 sudo apt-get update
 sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl libpam0g-dev expect python-software-properties
 sudo add-apt-repository ppa:webupd8team/java
@@ -58,47 +59,35 @@ echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | su
 sudo apt-get install -y oracle-java7-installer
 
 
-download_unless_exist "http://www.erlang.org/download/otp_src_R16B02.tar.gz"
+download_unless_exist "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/ubuntu/precise/riak_2.0.0beta1-1_amd64.deb"
 
-verify_checksum "otp_src_R16B02.tar.gz" 5bd028771290eacbc075ca65a63749e6 || exit
+sudo dpkg -i riak_2.0.0beta1-1_amd64.deb
 
-if [ ! -d otp_src_R16B02 ]; then
-  tar zxf otp_src_R16B02.tar.gz
-  pushd otp_src_R16B02
-  ./configure
-  make
-  sudo make install
-  popd
-fi
+sudo apt-get install -f
 
-if [ ! -d riak ]; then
-  git clone https://github.com/basho/riak.git
-  pushd riak
-  git checkout riak-2.0.0pre20
-  make locked-all rel
-  pushd rel/riak
-  echo 'search = on' >> etc/riak.conf
-  echo 'anti_entropy = passive' >> etc/riak.conf
-  echo 'storage_backend = memory' >> etc/riak.conf
-  echo 'listener.http.internal = 0.0.0.0:8098' >> etc/riak.conf
-  echo 'listener.protobuf.internal = 0.0.0.0:8087' >> etc/riak.conf
-  cp /vagrant/advanced.config etc/advanced.config
-  popd
-  popd
-fi
+echo 'search = on' >> /etc/riak/riak.conf
+echo 'storage_backend = memory' >> /etc/riak/riak.conf
+echo 'listener.http.internal = 0.0.0.0:8098' >> /etc/riak/riak.conf
+echo 'listener.protobuf.internal = 0.0.0.0:8087' >> /etc/riak/riak.conf
+cp /vagrant/advanced.config /etc/riak/advanced.config
 
-pushd riak/rel/riak
 ulimit -n 8192
 ulimit -n
-./bin/riak start
+riak start
 
-./bin/riak-admin bucket-type create counters '{"props":{"datatype":"counter", "allow_mult":true}}'
-./bin/riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
-./bin/riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
-./bin/riak-admin bucket-type create yokozuna '{"props":{}}'
-./bin/riak-admin bucket-type activate counters
-./bin/riak-admin bucket-type activate maps
-./bin/riak-admin bucket-type activate sets
-./bin/riak-admin bucket-type activate yokozuna
+riak-admin bucket-type create counters '{"props":{"datatype":"counter", "allow_mult":true}}'
+riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
+riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
+riak-admin bucket-type create yokozuna '{"props":{}}'
 
-./bin/riak ping
+riak-admin security add-user user password=password
+
+# wait for bucket types to settle
+sleep 10
+
+riak-admin bucket-type activate counters
+riak-admin bucket-type activate maps
+riak-admin bucket-type activate sets
+riak-admin bucket-type activate yokozuna
+
+riak ping
