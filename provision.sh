@@ -81,6 +81,8 @@ riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":tru
 riak-admin bucket-type create yokozuna '{"props":{}}'
 
 riak-admin security add-user user password=password
+riak-admin security add-source user 127.0.0.1/32 password
+riak-admin security grant riak_kv.get,riak_kv.put,riak_kv.delete,riak_kv.index,riak_kv.list_keys,riak_kv.list_buckets,riak_core.get_bucket,riak_core.set_bucket,riak_core.get_bucket_type,riak_core.set_bucket_type,search.admin,search.query on any to user
 
 # wait for bucket types to settle
 sleep 10
