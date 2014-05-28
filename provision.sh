@@ -59,14 +59,14 @@ echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | su
 sudo apt-get install -y oracle-java7-installer
 
 
-download_unless_exist "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/ubuntu/precise/riak_2.0.0beta1-1_amd64.deb"
+download_unless_exist "http://s3.amazonaws.com/builds.basho.com/riak/develop/2.0.0beta4-4-g3e130f6/ubuntu/precise/riak_2.0.0beta4-03235ba0-1_amd64.deb"
 
-sudo dpkg -i riak_2.0.0beta1-1_amd64.deb
+sudo dpkg -i riak_2.0.0beta4-03235ba0-1_amd64.deb
 
 sudo apt-get install -f
 
 echo 'search = on' >> /etc/riak/riak.conf
-echo 'storage_backend = memory' >> /etc/riak/riak.conf
+echo 'storage_backend = leveldb' >> /etc/riak/riak.conf
 echo 'listener.http.internal = 0.0.0.0:8098' >> /etc/riak/riak.conf
 echo 'listener.protobuf.internal = 0.0.0.0:8087' >> /etc/riak/riak.conf
 cp /vagrant/advanced.config /etc/riak/advanced.config
@@ -81,7 +81,7 @@ riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":tru
 riak-admin bucket-type create yokozuna '{"props":{}}'
 
 riak-admin security add-user user password=password
-riak-admin security add-source user 127.0.0.1/32 password
+riak-admin security add-source all 0.0.0.0/0 password
 riak-admin security grant riak_kv.get,riak_kv.put,riak_kv.delete,riak_kv.index,riak_kv.list_keys,riak_kv.list_buckets,riak_core.get_bucket,riak_core.set_bucket,riak_core.get_bucket_type,riak_core.set_bucket_type,search.admin,search.query on any to user
 
 # wait for bucket types to settle
