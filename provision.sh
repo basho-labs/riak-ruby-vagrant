@@ -59,9 +59,9 @@ echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | su
 sudo apt-get install -y oracle-java7-installer
 
 
-download_unless_exist "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/ubuntu/precise/riak_2.0.0beta1-1_amd64.deb"
+download_unless_exist "http://s3.amazonaws.com/builds.basho.com/riak/develop/2.0.0beta4-4-g3e130f6/ubuntu/precise/riak_2.0.0beta4-03235ba0-1_amd64.deb"
 
-sudo dpkg -i riak_2.0.0beta1-1_amd64.deb
+sudo dpkg -i riak_2.0.0beta4-03235ba0-1_amd64.deb
 
 sudo apt-get install -f
 
@@ -69,7 +69,10 @@ echo 'search = on' >> /etc/riak/riak.conf
 echo 'storage_backend = memory' >> /etc/riak/riak.conf
 echo 'listener.http.internal = 0.0.0.0:8098' >> /etc/riak/riak.conf
 echo 'listener.protobuf.internal = 0.0.0.0:8087' >> /etc/riak/riak.conf
-cp /vagrant/advanced.config /etc/riak/advanced.config
+echo 'ssl.certfile = /vagrant/certs/server.crt' >> /etc/riak/riak.conf
+echo 'ssl.keyfile = /vagrant/certs/server.key' >> /etc/riak/riak.conf
+echo 'ssl.cacertfile = /vagrant/certs/ca.crt' >> /etc/riak/riak.conf
+echo 'buckets.default.allow_mult = true' >> /etc/riak/riak.conf
 
 ulimit -n 8192
 ulimit -n
