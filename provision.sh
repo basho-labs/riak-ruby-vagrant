@@ -69,6 +69,9 @@ echo 'search = on' >> /etc/riak/riak.conf
 echo 'storage_backend = leveldb' >> /etc/riak/riak.conf
 echo 'listener.http.internal = 0.0.0.0:8098' >> /etc/riak/riak.conf
 echo 'listener.protobuf.internal = 0.0.0.0:8087' >> /etc/riak/riak.conf
+echo 'ssl.certfile = /vagrant/certs/server.crt' >> /etc/riak/riak.conf
+echo 'ssl.keyfile = /vagrant/certs/server.key' >> /etc/riak/riak.conf
+echo 'ssl.cacertfile = /vagrant/certs/ca.crt' >> /etc/riak/riak.conf
 cp /vagrant/advanced.config /etc/riak/advanced.config
 
 ulimit -n 8192
