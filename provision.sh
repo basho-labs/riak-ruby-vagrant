@@ -72,7 +72,8 @@ echo 'listener.protobuf.internal = 0.0.0.0:8087' >> /etc/riak/riak.conf
 echo 'ssl.certfile = /vagrant/certs/server.crt' >> /etc/riak/riak.conf
 echo 'ssl.keyfile = /vagrant/certs/server.key' >> /etc/riak/riak.conf
 echo 'ssl.cacertfile = /vagrant/certs/ca.crt' >> /etc/riak/riak.conf
-cp /vagrant/advanced.config /etc/riak/advanced.config
+echo 'buckets.default.allow_mult = true' >> /etc/riak/riak.conf
+
 
 ulimit -n 8192
 ulimit -n
