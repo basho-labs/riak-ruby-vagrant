@@ -59,9 +59,9 @@ echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | su
 sudo apt-get install -y oracle-java7-installer
 
 
-download_unless_exist "http://s3.amazonaws.com/builds.basho.com/riak/develop/2.0.0beta4-4-g3e130f6/ubuntu/precise/riak_2.0.0beta4-03235ba0-1_amd64.deb"
+download_unless_exist "http://s3.amazonaws.com/builds.basho.com/riak/develop/2.0.0beta7/ubuntu/precise/riak_2.0.0beta7-1_amd64.deb"
 
-sudo dpkg -i riak_2.0.0beta4-03235ba0-1_amd64.deb
+sudo dpkg -i riak-ee_2.0.0beta5-1_amd64.deb
 
 sudo apt-get install -f
 
