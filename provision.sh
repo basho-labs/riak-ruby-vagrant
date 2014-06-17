@@ -61,7 +61,7 @@ sudo apt-get install -y oracle-java7-installer
 
 download_unless_exist "http://s3.amazonaws.com/builds.basho.com/riak/develop/2.0.0beta7/ubuntu/precise/riak_2.0.0beta7-1_amd64.deb"
 
-sudo dpkg -i riak-ee_2.0.0beta5-1_amd64.deb
+sudo dpkg -i riak_2.0.0beta7-1_amd64.deb
 
 sudo apt-get install -f
 
@@ -75,7 +75,7 @@ echo 'ssl.cacertfile = /vagrant/certs/ca.crt' >> /etc/riak/riak.conf
 echo 'buckets.default.allow_mult = true' >> /etc/riak/riak.conf
 
 
-ulimit -n 8192
+ulimit -n 65536
 ulimit -n
 riak start
 
