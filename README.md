@@ -29,7 +29,7 @@ The Riak instance has:
 * [Memory backend](http://docs.basho.com/riak/latest/ops/advanced/backends/memory/) configured;
   2i works, rebooting the vagrant instance clears the kv data (but not yz), and it makes the disk footprint 
   grow slower.
-* [allow_mult])(http://docs.basho.com/riak/latest/theory/concepts/Vector-Clocks/#Siblings) enabled
+* [allow_mult](http://docs.basho.com/riak/latest/theory/concepts/Vector-Clocks/#Siblings) enabled
   by default, because I need to test how the client handles sibling resolution and CRDTs.
 * Bucket types for Set, Counter, and Map CRDTs. They're called "sets", "counters", and "maps" respectively.
 
