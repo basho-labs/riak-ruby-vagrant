@@ -58,10 +58,9 @@ sudo apt-get update
 echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 sudo apt-get install -y oracle-java7-installer
 
+curl https://packagecloud.io/install/repositories/basho/riak/script.deb | sudo bash
 
-download_unless_exist "http://s3.amazonaws.com/builds.basho.com/riak/develop/2.0.0rc1/ubuntu/precise/riak_2.0.0rc1-1_amd64.deb"
-
-sudo dpkg -i riak_2.0.0rc1-1_amd64.deb
+sudo apt-get install -y riak
 
 sudo apt-get install -f
 
