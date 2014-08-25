@@ -73,7 +73,7 @@ echo 'ssl.certfile = /vagrant/certs/server.crt' >> /etc/riak/riak.conf
 echo 'ssl.keyfile = /vagrant/certs/server.key' >> /etc/riak/riak.conf
 echo 'ssl.cacertfile = /vagrant/certs/ca.crt' >> /etc/riak/riak.conf
 echo 'buckets.default.allow_mult = true' >> /etc/riak/riak.conf
-
+echo 'tls_protocols.tlsv1.1 = on' >> /etc/riak/riak.conf
 
 ulimit -n 65536
 ulimit -n
