@@ -53,6 +53,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vm.vmx['memsize'] = '1024'
   end
 
+  config.vm.provider 'parallels' do |v, override|
+    override.vm.box = "parallels/ubuntu-12.04"
+    v.memory = 1024
+  end
+
   #
   # View the documentation for the provider you're using for more
   # information on available options.
