@@ -73,6 +73,7 @@ echo 'ssl.keyfile = /vagrant/certs/server.key' >> /etc/riak/riak.conf
 echo 'ssl.cacertfile = /vagrant/certs/ca.crt' >> /etc/riak/riak.conf
 echo 'buckets.default.allow_mult = true' >> /etc/riak/riak.conf
 echo 'tls_protocols.tlsv1.1 = on' >> /etc/riak/riak.conf
+echo 'check_crl = off' >> /etc/riak/riak.conf
 
 ulimit -n 65536
 ulimit -n
@@ -89,7 +90,7 @@ riak-admin security add-user certuser
 riak-admin security add-source user 0.0.0.0/0 password
 riak-admin security add-source certuser 0.0.0.0/0 certificate
 
-riak-admin security grant riak_kv.get,riak_kv.put,riak_kv.delete,riak_kv.index,riak_kv.list_keys,riak_kv.list_buckets,riak_core.get_bucket,riak_core.set_bucket,riak_core.get_bucket_type,riak_core.set_bucket_type,search.admin,search.query on any to user
+riak-admin security grant riak_kv.get,riak_kv.put,riak_kv.delete,riak_kv.index,riak_kv.list_keys,riak_kv.list_buckets,riak_core.get_bucket,riak_core.set_bucket,riak_core.get_bucket_type,riak_core.set_bucket_type,search.admin,search.query,riak_kv.mapreduce on any to user
 
 # wait for bucket types to settle
 sleep 10
