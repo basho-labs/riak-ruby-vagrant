@@ -80,6 +80,7 @@ ulimit -n
 riak start
 
 riak-admin bucket-type create counters '{"props":{"datatype":"counter", "allow_mult":true}}'
+riak-admin bucket-type create other_counters '{"props":{"datatype":"counter", "allow_mult":true}}'
 riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
 riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
 riak-admin bucket-type create yokozuna '{"props":{}}'
@@ -95,6 +96,7 @@ riak-admin security grant riak_kv.get,riak_kv.put,riak_kv.delete,riak_kv.index,r
 # wait for bucket types to settle
 sleep 10
 
+riak-admin bucket-type activate other_counters
 riak-admin bucket-type activate counters
 riak-admin bucket-type activate maps
 riak-admin bucket-type activate sets
