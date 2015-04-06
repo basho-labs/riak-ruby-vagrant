@@ -84,6 +84,7 @@ riak-admin bucket-type create other_counters '{"props":{"datatype":"counter", "a
 riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
 riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
 riak-admin bucket-type create yokozuna '{"props":{}}'
+riak-admin bucket-type create write_once '{"props":{"write_once":true}}'
 
 riak-admin security add-user user password=password
 riak-admin security add-user certuser
@@ -101,5 +102,6 @@ riak-admin bucket-type activate counters
 riak-admin bucket-type activate maps
 riak-admin bucket-type activate sets
 riak-admin bucket-type activate yokozuna
+riak-admin bucket-type activate write_once
 
 riak ping
