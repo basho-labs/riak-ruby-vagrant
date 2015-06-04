@@ -58,7 +58,7 @@ sudo apt-get update
 echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 sudo apt-get install -y oracle-java7-installer
 
-curl https://packagecloud.io/install/repositories/basho/riak/script.deb | sudo bash
+curl https://packagecloud.io/install/repositories/basho/riak/script.deb.sh | sudo bash
 
 sudo apt-get install -y riak
 
