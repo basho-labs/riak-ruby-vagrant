@@ -14,3 +14,4 @@ bin/*
 
 cookbooks
 !cookbooks/riak-ruby-vagrant
+*.deb
