@@ -58,9 +58,11 @@ sudo apt-get update
 echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 sudo apt-get install -y oracle-java7-installer
 
-curl https://packagecloud.io/install/repositories/basho/riak/script.deb.sh | sudo bash
+sudo dpkg -i /vagrant/riak-ts_1.0.0rc3-1_amd64.deb
 
-sudo apt-get install -y riak
+# curl https://packagecloud.io/install/repositories/basho/riak/script.deb.sh | sudo bash
+#
+# sudo apt-get install -y riak
 
 sudo apt-get install -f
 
@@ -84,6 +86,8 @@ riak-admin bucket-type create other_counters '{"props":{"datatype":"counter", "a
 riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
 riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
 riak-admin bucket-type create yokozuna '{"props":{}}'
+riak-admin bucket-type create GeoCheckin '{"props":{"n_val":1, "table_def": "CREATE TABLE GeoCheckin \(myfamily varchar not null, myseries varchar not null, time timestamp not null, weather varchar not null, temperature float, primary key\(\(quantum\(time, 15, m\), myfamily, myseries\), time, myfamily, myseries\)\)"}}'
+sleep 1
 
 riak-admin security add-user user password=password
 riak-admin security add-user certuser
@@ -101,5 +105,6 @@ riak-admin bucket-type activate counters
 riak-admin bucket-type activate maps
 riak-admin bucket-type activate sets
 riak-admin bucket-type activate yokozuna
+riak-admin bucket-type activate GeoCheckin
 
 riak ping
