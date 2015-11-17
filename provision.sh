@@ -86,7 +86,7 @@ riak-admin bucket-type create other_counters '{"props":{"datatype":"counter", "a
 riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
 riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
 riak-admin bucket-type create yokozuna '{"props":{}}'
-riak-admin bucket-type create GeoCheckin '{"props":{"n_val":1, "table_def": "CREATE TABLE GeoCheckin \(myfamily varchar not null, myseries varchar not null, time timestamp not null, weather varchar not null, temperature float, primary key\(\(quantum\(time, 15, m\), myfamily, myseries\), time, myfamily, myseries\)\)"}}'
+riak-admin bucket-type create GeoCheckin '{"props":{"n_val":1, "table_def": "CREATE TABLE GeoCheckin \(myfamily varchar not null, myseries varchar not null, time timestamp not null, weather varchar not null, temperature float, primary key\(\(myfamily, myseries, quantum\(time, 15, m\)\), myfamily, myseries, time\)\)"}}'
 sleep 1
 
 riak-admin security add-user user password=password
