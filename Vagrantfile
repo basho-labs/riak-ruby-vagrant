@@ -24,6 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 8098, host: 17018
 
   config.vm.provision 'shell', path: 'provision.sh'
+  config.vm.provision 'shell', path: 'setup-rt.sh', privileged: false
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -55,7 +56,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider 'vmware_fusion' do |vm, override|
     override.vm.box_url = "http://files.vagrantup.com/precise64_vmware_fusion.box"
-    vm.vmx['memsize'] = '1024'
+    vm.vmx['memsize'] = '2048'
+    vm.vmx['numvcpus'] = '2'
   end
 
   config.vm.provider 'parallels' do |v, override|

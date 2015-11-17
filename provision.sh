@@ -52,59 +52,8 @@ download_unless_exist() {
 
 
 sudo apt-get update
-sudo apt-get install -y build-essential libncurses5-dev openssl libssl-dev git curl libpam0g-dev expect python-software-properties
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-sudo apt-get install -y oracle-java7-installer
-
-sudo dpkg -i /vagrant/riak-ts_1.0.0rc3-1_amd64.deb
-
-# curl https://packagecloud.io/install/repositories/basho/riak/script.deb.sh | sudo bash
-#
-# sudo apt-get install -y riak
-
-sudo apt-get install -f
-
-echo 'search = on' >> /etc/riak/riak.conf
-echo 'storage_backend = leveldb' >> /etc/riak/riak.conf
-echo 'listener.http.internal = 0.0.0.0:8098' >> /etc/riak/riak.conf
-echo 'listener.protobuf.internal = 0.0.0.0:8087' >> /etc/riak/riak.conf
-echo 'ssl.certfile = /vagrant/certs/server.crt' >> /etc/riak/riak.conf
-echo 'ssl.keyfile = /vagrant/certs/server.key' >> /etc/riak/riak.conf
-echo 'ssl.cacertfile = /vagrant/certs/ca.crt' >> /etc/riak/riak.conf
-echo 'buckets.default.allow_mult = true' >> /etc/riak/riak.conf
-echo 'tls_protocols.tlsv1.1 = on' >> /etc/riak/riak.conf
-echo 'check_crl = off' >> /etc/riak/riak.conf
-
-ulimit -n 65536
-ulimit -n
-riak start
-
-riak-admin bucket-type create counters '{"props":{"datatype":"counter", "allow_mult":true}}'
-riak-admin bucket-type create other_counters '{"props":{"datatype":"counter", "allow_mult":true}}'
-riak-admin bucket-type create maps '{"props":{"datatype":"map", "allow_mult":true}}'
-riak-admin bucket-type create sets '{"props":{"datatype":"set", "allow_mult":true}}'
-riak-admin bucket-type create yokozuna '{"props":{}}'
-riak-admin bucket-type create GeoCheckin '{"props":{"n_val":1, "table_def": "CREATE TABLE GeoCheckin \(myfamily varchar not null, myseries varchar not null, time timestamp not null, weather varchar not null, temperature float, primary key\(\(myfamily, myseries, quantum\(time, 15, m\)\), myfamily, myseries, time\)\)"}}'
-sleep 1
-
-riak-admin security add-user user password=password
-riak-admin security add-user certuser
-
-riak-admin security add-source user 0.0.0.0/0 password
-riak-admin security add-source certuser 0.0.0.0/0 certificate
-
-riak-admin security grant riak_kv.get,riak_kv.put,riak_kv.delete,riak_kv.index,riak_kv.list_keys,riak_kv.list_buckets,riak_core.get_bucket,riak_core.set_bucket,riak_core.get_bucket_type,riak_core.set_bucket_type,search.admin,search.query,riak_kv.mapreduce on any to user
-
-# wait for bucket types to settle
-sleep 10
-
-riak-admin bucket-type activate other_counters
-riak-admin bucket-type activate counters
-riak-admin bucket-type activate maps
-riak-admin bucket-type activate sets
-riak-admin bucket-type activate yokozuna
-riak-admin bucket-type activate GeoCheckin
-
-riak ping
+sudo apt-get install -y build-essential m4 autoconf automake libncurses5-dev openssl libssl-dev git curl libpam0g-dev expect python-software-properties default-jdk
+# sudo add-apt-repository ppa:webupd8team/java
+# sudo apt-get update
+# echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+# sudo apt-get install -y oracle-java7-installer
